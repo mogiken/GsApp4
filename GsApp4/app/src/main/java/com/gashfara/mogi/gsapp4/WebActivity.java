@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 
 public class WebActivity extends ActionBarActivity {
 
@@ -56,4 +59,14 @@ public class WebActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    //GrowthHackで追加ここから
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Tracker t = ((VolleyApplication)getApplication()).getTracker(VolleyApplication.TrackerName.APP_TRACKER);
+        t.setScreenName(this.getClass().getSimpleName());
+        t.send(new HitBuilders.AppViewBuilder().build());
+    }
+    //GrowthHackで追加ここまで
+
 }
